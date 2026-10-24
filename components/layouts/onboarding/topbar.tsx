@@ -1,0 +1,37 @@
+"use client"
+
+import Link from "next/link"
+import { RefreshCw } from "lucide-react"
+import { Text } from "@/components/reuseables/text"
+import { useWallet } from "@/components/providers/wallet-provider"
+import { truncateAddress } from "@/lib/stellar/wallet-kit"
+
+function OnboardingTopbar() {
+  const { walletAddress } = useWallet()
+
+  return (
+    <header className="flex items-center justify-between border-b border-border bg-white px-6 py-4">
+      <Link href="/" className="flex items-center gap-2">
+        <span className="flex size-7 items-center justify-center rounded-lg bg-[#0B1F3A] text-white">
+          <RefreshCw className="size-3.5" />
+        </span>
+        <Text as="span" weight="bold">
+          AutoPayX
+        </Text>
+      </Link>
+
+      <div className="flex items-center gap-3">
+        <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700">
+          <span className="size-1.5 rounded-full bg-emerald-500" />
+          <span className="hidden sm:inline">Stellar </span>Testnet
+        </span>
+        <span className="flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground">
+          <span className="size-3 rounded-full bg-blue-500" />
+          {walletAddress ? truncateAddress(walletAddress) : "Not connected"}
+        </span>
+      </div>
+    </header>
+  )
+}
+
+export { OnboardingTopbar }
